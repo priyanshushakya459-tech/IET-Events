@@ -397,3 +397,63 @@
     font-size: 12px;
   }
 }
+
+/* FINAL PROFILE NAVBAR SIZE FIX */
+
+.profile-menu {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  flex-shrink: 0 !important;
+}
+
+.profile-trigger {
+  width: auto !important;
+  height: 56px !important;
+  min-height: 56px !important;
+  padding: 6px 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  border-radius: 13px !important;
+  box-sizing: border-box !important;
+}
+
+.profile-trigger .profile-avatar {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  max-width: 40px !important;
+  border-radius: 50% !important;
+  font-size: 17px !important;
+  flex-shrink: 0 !important;
+}
+
+.profile-trigger-name {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  white-space: nowrap !important;
+  line-height: 1.2 !important;
+}
+
+.dropdown-arrow {
+  font-size: 13px !important;
+  margin-left: 2px !important;
+  flex-shrink: 0 !important;
+}
+
+@media (max-width: 600px) {
+  .profile-trigger {
+    height: 44px !important;
+    min-height: 44px !important;
+    padding: 3px !important;
+  }
+
+  .profile-trigger .profile-avatar {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    max-width: 38px !important;
+  }
+}
