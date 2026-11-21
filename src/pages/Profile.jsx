@@ -13,90 +13,7 @@ const initialProfile = {
   roll_number: "",
   mobile_number: "",
 };
-{/* PASSWORD MANAGEMENT */}
-<section className="password-management-card">
 
-  <div className="email-verification-heading">
-    <div>
-      <span className="profile-eyebrow">
-        ACCOUNT SECURITY
-      </span>
-
-      <h2>My Password</h2>
-
-      <p>
-        Manage your IET Events account password.
-      </p>
-    </div>
-  </div>
-
-  <form onSubmit={handlePasswordUpdate}>
-
-    <label>
-      Current Password
-
-      <input
-        type={showPasswords ? "text" : "password"}
-        value={currentPassword}
-        onChange={(e) => setCurrentPassword(e.target.value)}
-        placeholder="Enter current password"
-        required
-      />
-    </label>
-
-    <label>
-      New Password
-
-      <input
-        type={showPasswords ? "text" : "password"}
-        value={newPassword}
-        onChange={(e) => setNewPassword(e.target.value)}
-        placeholder="Enter new password"
-        minLength={8}
-        required
-      />
-    </label>
-
-    <label>
-      Confirm New Password
-
-      <input
-        type={showPasswords ? "text" : "password"}
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
-        placeholder="Confirm new password"
-        required
-      />
-    </label>
-
-    <label className="password-show-toggle">
-      <input
-        type="checkbox"
-        checked={showPasswords}
-        onChange={(e) => setShowPasswords(e.target.checked)}
-      />
-      Show Passwords
-    </label>
-
-    {passwordMessage && (
-      <div className="profile-message">
-        {passwordMessage}
-      </div>
-    )}
-
-    <button
-      type="submit"
-      className="profile-save-btn"
-      disabled={passwordLoading}
-    >
-      {passwordLoading
-        ? "Updating..."
-        : "Update Password"}
-    </button>
-
-  </form>
-
-</section>
 const branches = [
   "Computer Science Engineering",
   "CSE (Self Finance)",
@@ -120,12 +37,16 @@ const academicYears = [
 
 function Profile() {
   const navigate = useNavigate();
+
+  // PASSWORD STATES
   const [currentPassword, setCurrentPassword] = useState("");
-const [newPassword, setNewPassword] = useState("");
-const [confirmPassword, setConfirmPassword] = useState("");
-const [showPasswords, setShowPasswords] = useState(false);
-const [passwordLoading, setPasswordLoading] = useState(false);
-const [passwordMessage, setPasswordMessage] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPasswords, setShowPasswords] = useState(false);
+  const [passwordLoading, setPasswordLoading] = useState(false);
+  const [passwordMessage, setPasswordMessage] = useState("");
+
+  // PROFILE STATES
   const [profile, setProfile] = useState(initialProfile);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -136,62 +57,69 @@ const [passwordMessage, setPasswordMessage] = useState("");
 
   const [emailVerified, setEmailVerified] = useState(false);
   const [isOnboarding, setIsOnboarding] = useState(false);
- const handlePasswordUpdate = async (e) => {
-  e.preventDefault();
 
-  setPasswordMessage("");
+  // UPDATE PASSWORD
+  const handlePasswordUpdate = async (e) => {
+    e.preventDefault();
 
-  if (newPassword.length < 8) {
-    setPasswordMessage("Password must be at least 8 characters.");
-    return;
-  }
+    setPasswordMessage("");
 
-  if (newPassword !== confirmPassword) {
-    setPasswordMessage("New passwords do not match.");
-    return;
-  }
-
-  if (currentPassword === newPassword) {
-    setPasswordMessage("New password must be different.");
-    return;
-  }
-
-  try {
-    setPasswordLoading(true);
-
-    const { error: loginError } =
-      await supabase.auth.signInWithPassword({
-        email: profile.college_email,
-        password: currentPassword,
-      });
-
-    if (loginError) {
-      throw new Error("Current password is incorrect.");
+    if (newPassword.length < 8) {
+      setPasswordMessage("Password must be at least 8 characters.");
+      return;
     }
 
-    const { error } = await supabase.auth.updateUser({
-      password: newPassword,
-    });
+    if (newPassword !== confirmPassword) {
+      setPasswordMessage("New passwords do not match.");
+      return;
+    }
 
-    if (error) throw error;
+    if (currentPassword === newPassword) {
+      setPasswordMessage("New password must be different.");
+      return;
+    }
 
-    setCurrentPassword("");
-    setNewPassword("");
-    setConfirmPassword("");
+    try {
+      setPasswordLoading(true);
 
-    setPasswordMessage("Password updated successfully!");
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser();
 
-  } catch (error) {
-    setPasswordMessage(error.message);
-  } finally {
-    setPasswordLoading(false);
-  }
-};
-  useEffect(() => {
-    fetchProfile();
-  }, []);
+      if (authError) throw authError;
+      if (!user) throw new Error("Please login again.");
 
-  // FETCH PROFILE AND AUTH EMAIL
+      const { error: loginError } =
+        await supabase.auth.signInWithPassword({
+          email: user.email,
+          password: currentPassword,
+        });
+
+      if (loginError) {
+        throw new Error("Current password is incorrect.");
+      }
+
+      const { error } = await supabase.auth.updateUser({
+        password: newPassword,
+      });
+
+      if (error) throw error;
+
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+
+      setPasswordMessage("Password updated successfully!");
+
+    } catch (error) {
+      setPasswordMessage(error.message || "Unable to update password.");
+    } finally {
+      setPasswordLoading(false);
+    }
+  };
+
+  // FETCH PROFILE
   const fetchProfile = async () => {
     try {
       setLoading(true);
@@ -212,7 +140,6 @@ const [passwordMessage, setPasswordMessage] = useState("");
 
       if (error) throw error;
 
-      // If profile row does not exist, initialize an empty profile.
       const completed = Boolean(data?.profile_completed);
 
       setProfile({
@@ -232,7 +159,6 @@ const [passwordMessage, setPasswordMessage] = useState("");
 
       setEmailVerified(verified);
 
-      // First-time or incomplete profile
       setIsOnboarding(!completed);
       setEditing(!completed);
 
@@ -244,6 +170,10 @@ const [passwordMessage, setPasswordMessage] = useState("");
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
 
   // HANDLE INPUT CHANGE
   const handleChange = (e) => {
@@ -264,28 +194,24 @@ const [passwordMessage, setPasswordMessage] = useState("");
     setMessage("");
     setMessageType("");
 
-    // Validate full name
     if (!profile.full_name.trim()) {
       setMessage("Full name is required.");
       setMessageType("error");
       return;
     }
 
-    // Validate mobile number
     if (!/^[0-9]{10}$/.test(profile.mobile_number.trim())) {
       setMessage("Enter a valid 10-digit mobile number.");
       setMessageType("error");
       return;
     }
 
-    // Validate roll number
     if (!profile.roll_number.trim()) {
       setMessage("Roll number is required.");
       setMessageType("error");
       return;
     }
 
-    // Validate academic details
     if (!profile.branch || !profile.academic_year) {
       setMessage("Please complete your academic details.");
       setMessageType("error");
@@ -310,24 +236,16 @@ const [passwordMessage, setPasswordMessage] = useState("");
         .upsert(
           {
             id: user.id,
-
             full_name: profile.full_name.trim(),
-
-            // Keep email synchronized with Supabase Auth
             college_email: user.email,
-
             course: profile.course,
             branch: profile.branch,
             academic_year: profile.academic_year,
             roll_number: profile.roll_number.trim(),
             mobile_number: profile.mobile_number.trim(),
-
-            // Email verification status
             college_email_verified: verified,
             college_email_verified_at:
               user.email_confirmed_at || null,
-
-            // Mark profile as completed
             profile_completed: true,
           },
           { onConflict: "id" }
@@ -337,10 +255,8 @@ const [passwordMessage, setPasswordMessage] = useState("");
 
       setEmailVerified(verified);
       setEditing(false);
-
       setMessageType("success");
 
-      // First-time profile completion
       if (isOnboarding) {
         setIsOnboarding(false);
         setMessage("Profile completed successfully!");
@@ -349,7 +265,6 @@ const [passwordMessage, setPasswordMessage] = useState("");
         return;
       }
 
-      // Existing user editing profile
       setMessage("Profile updated successfully!");
 
       await fetchProfile();
@@ -678,6 +593,91 @@ const [passwordMessage, setPasswordMessage] = useState("");
               Supabase confirmation link to verify your email.
             </div>
           )}
+
+        </section>
+
+        {/* PASSWORD MANAGEMENT */}
+        <section className="password-management-card">
+
+          <div className="email-verification-heading">
+            <div>
+              <span className="profile-eyebrow">
+                ACCOUNT SECURITY
+              </span>
+
+              <h2>My Password</h2>
+
+              <p>
+                Manage your IET Events account password.
+              </p>
+            </div>
+          </div>
+
+          <form onSubmit={handlePasswordUpdate}>
+
+            <label>
+              Current Password
+
+              <input
+                type={showPasswords ? "text" : "password"}
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                placeholder="Enter current password"
+                required
+              />
+            </label>
+
+            <label>
+              New Password
+
+              <input
+                type={showPasswords ? "text" : "password"}
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="Enter new password"
+                minLength={8}
+                required
+              />
+            </label>
+
+            <label>
+              Confirm New Password
+
+              <input
+                type={showPasswords ? "text" : "password"}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Confirm new password"
+                required
+              />
+            </label>
+
+            <label className="password-show-toggle">
+              <input
+                type="checkbox"
+                checked={showPasswords}
+                onChange={(e) => setShowPasswords(e.target.checked)}
+              />
+              Show Passwords
+            </label>
+
+            {passwordMessage && (
+              <div className="profile-message">
+                {passwordMessage}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              className="profile-save-btn"
+              disabled={passwordLoading}
+            >
+              {passwordLoading
+                ? "Updating..."
+                : "Update Password"}
+            </button>
+
+          </form>
 
         </section>
 
