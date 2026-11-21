@@ -1,26 +1,141 @@
 
-/* ===============================
-   PROFILE DROPDOWN
-================================ */
+/* =================================
+   MAIN NAVBAR
+================================= */
 
-.profile-wrapper {
+.navbar {
+  width: 100%;
+  min-height: 76px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
   position: relative;
-  width: fit-content;
+  z-index: 1000;
+  box-sizing: border-box;
 }
+
+.navbar-container {
+  width: 100%;
+  max-width: 1320px;
+  min-height: 76px;
+  margin: 0 auto;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  box-sizing: border-box;
+}
+
+/* Logo */
+
+.brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.brand-name {
+  font-size: 22px;
+  font-weight: 800;
+  color: #172033;
+  white-space: nowrap;
+}
+
+/* Navigation Links */
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-left: auto;
+}
+
+.nav-links a {
+  color: #64748b;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-links a:hover {
+  color: #4338ca;
+}
+
+/* Right Side */
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* Login and Signup */
+
+.login-btn,
+.signup-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.login-btn {
+  color: #4338ca;
+  border: 1px solid #e5e7eb;
+  background: white;
+}
+
+.login-btn:hover {
+  background: #f8fafc;
+}
+
+.signup-btn {
+  background: #4338ca;
+  color: white;
+  border: 1px solid #4338ca;
+}
+
+.signup-btn:hover {
+  background: #3730a3;
+}
+
+/* =================================
+   PROFILE MENU
+================================= */
+
+.profile-menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Profile Trigger */
 
 .profile-trigger {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   width: auto;
-  height: auto;
-  min-height: unset;
-  padding: 7px 12px;
+  min-height: 56px;
+  padding: 6px 12px;
   border: 1px solid #e5e7eb;
   border-radius: 14px;
   background: #ffffff;
   cursor: pointer;
   transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 
 .profile-trigger:hover {
@@ -40,57 +155,46 @@
   justify-content: center;
   background: linear-gradient(135deg, #4338ca, #7c3aed);
   color: white;
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 700;
   flex-shrink: 0;
-  object-fit: cover;
 }
 
-/* User Information */
-
-.profile-trigger-info {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 3px;
-}
+/* Profile Name */
 
 .profile-trigger-name {
   font-size: 14px;
   font-weight: 600;
   color: #1e293b;
+  white-space: nowrap;
 }
 
-.profile-trigger-role {
-  font-size: 11px;
+/* Dropdown Arrow */
+
+.dropdown-arrow {
+  font-size: 13px;
   color: #64748b;
+  margin-left: 3px;
 }
 
-/* Arrow */
-
-.profile-chevron {
-  font-size: 18px;
-  color: #64748b;
-  margin-left: 5px;
-}
-
-/* ===============================
-   DROPDOWN
-================================ */
+/* =================================
+   PROFILE DROPDOWN
+================================= */
 
 .profile-dropdown {
   position: absolute;
   top: calc(100% + 12px);
   right: 0;
-  width: 280px;
+  width: 290px;
+  max-width: calc(100vw - 20px);
   background: white;
   border: 1px solid #e5e7eb;
   border-radius: 15px;
   box-shadow: 0 12px 35px rgba(15, 23, 42, 0.13);
   padding: 10px;
-  z-index: 1000;
-  animation: dropdownFade 0.18s ease;
+  z-index: 2000;
   box-sizing: border-box;
+  animation: dropdownFade 0.18s ease;
 }
 
 @keyframes dropdownFade {
@@ -105,48 +209,37 @@
   }
 }
 
-/* Dropdown Header */
+/* User Information */
 
-.profile-dropdown-header {
+.dropdown-user-info {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 8px;
-}
-
-.profile-avatar-large {
-  width: 48px;
-  height: 48px;
-  min-width: 48px;
-  font-size: 20px;
-}
-
-.profile-details {
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 10px;
   min-width: 0;
 }
 
-.profile-details h4 {
-  margin: 0 0 4px;
-  font-size: 14px;
+.dropdown-user-info strong {
+  font-size: 15px;
   color: #1e293b;
+  overflow-wrap: anywhere;
 }
 
-.profile-details p {
-  margin: 0 0 7px;
-  font-size: 11px;
+.dropdown-user-info small {
+  font-size: 12px;
   color: #64748b;
   overflow-wrap: anywhere;
 }
 
-/* Student Badge */
-
-.student-badge {
+.mode-label {
   display: inline-block;
-  padding: 3px 9px;
+  width: fit-content;
+  padding: 4px 9px;
+  margin-top: 3px;
   border-radius: 20px;
   background: #eef2ff;
   color: #4338ca;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
 }
 
@@ -156,18 +249,20 @@
   height: 1px;
   background: #e5e7eb;
   margin: 7px 0;
+  border: none;
 }
 
 /* Dropdown Items */
 
 .dropdown-item {
   width: 100%;
+  min-height: 42px;
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 11px 10px;
   border: none;
-  border-radius: 8px;
+  border-radius: 9px;
   background: transparent;
   text-decoration: none;
   color: #334155;
@@ -183,57 +278,21 @@
   background: #f1f5f9;
 }
 
-/* Logout */
-
-.logout-item {
-  color: #dc2626;
+.dropdown-item span:first-child {
+  flex-shrink: 0;
 }
 
-.logout-item:hover {
-  background: #fef2f2;
-}
-
-/* ===============================
-   ORGANIZER / STUDENT MODE SWITCH
-================================ */
-
-.mode-switch-section {
-  padding: 10px 8px;
-}
-
-.mode-switch-title {
-  margin: 0 0 10px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #64748b;
-}
-
-.mode-switch-buttons {
-  display: flex;
-  width: 100%;
-}
+/* Organizer / Student Switch */
 
 .mode-button {
-  width: 100%;
-  min-height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 10px 12px;
-  border: 1px solid #4338ca;
-  border-radius: 9px;
-  background: #4338ca;
-  color: #ffffff;
-  font-size: 13px;
+  justify-content: flex-start;
+  background: #eef2ff;
+  color: #4338ca;
   font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .mode-button:hover {
-  background: #3730a3;
-  border-color: #3730a3;
+  background: #e0e7ff;
 }
 
 .mode-button:disabled {
@@ -241,327 +300,100 @@
   cursor: not-allowed;
 }
 
-.mode-loading {
-  margin: 8px 0 0;
-  font-size: 11px;
-  color: #64748b;
-  text-align: center;
+/* Logout */
+
+.logout-button {
+  color: #dc2626;
 }
 
-/* ===============================
-   MOBILE RESPONSIVE
-================================ */
+.logout-button:hover {
+  background: #fef2f2;
+}
 
-@media (max-width: 600px) {
+/* =================================
+   RESPONSIVE NAVBAR
+================================= */
 
-  .profile-trigger-info,
-  .profile-chevron {
-    display: none;
+@media (max-width: 768px) {
+
+  .navbar-container {
+    padding: 0 16px;
+    gap: 12px;
+  }
+
+  .brand-name {
+    font-size: 19px;
+  }
+
+  .nav-links {
+    gap: 14px;
+  }
+
+  .nav-links a {
+    font-size: 13px;
   }
 
   .profile-trigger {
-    padding: 4px;
+    padding: 5px 8px;
+  }
+
+  .profile-trigger-name {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .navbar,
+  .navbar-container {
+    min-height: 68px;
+  }
+
+  .navbar-container {
+    padding: 0 14px;
+    gap: 8px;
+  }
+
+  .brand-name {
+    font-size: 18px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-actions {
+    margin-left: auto;
+    gap: 7px;
+  }
+
+  .profile-trigger {
+    min-height: 44px;
+    padding: 3px;
     border: none;
     background: transparent;
     gap: 0;
   }
 
-  .profile-trigger:hover {
-    background: #f1f5f9;
+  .profile-trigger-name,
+  .dropdown-arrow {
+    display: none;
   }
 
-  .profile-trigger .profile-avatar,
-  .profile-trigger img {
+  .profile-avatar {
     width: 40px;
     height: 40px;
     min-width: 40px;
   }
 
   .profile-dropdown {
-    width: 270px;
-    right: 0;
-    max-width: calc(100vw - 20px);
-  }
-}
-
-
-/* Avatar */
-
-.profile-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #4338ca, #7c3aed);
-  color: white;
-  font-size: 17px;
-  font-weight: 700;
-  flex-shrink: 0;
-}
-
-/* User information */
-
-.profile-trigger-info {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 3px;
-}
-
-.profile-trigger-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: #1e293b;
-}
-
-.profile-trigger-role {
-  font-size: 11px;
-  color: #64748b;
-}
-
-.profile-chevron {
-  font-size: 18px;
-  color: #64748b;
-  margin-left: 5px;
-}
-
-/* Dropdown */
-
-.profile-dropdown {
-  position: absolute;
-  top: calc(100% + 12px);
-  right: 0;
-  width: 280px;
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 15px;
-  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.13);
-  padding: 10px;
-  z-index: 1000;
-  animation: dropdownFade 0.18s ease;
-}
-
-@keyframes dropdownFade {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Dropdown Header */
-
-.profile-dropdown-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 8px;
-}
-
-.profile-avatar-large {
-  width: 48px;
-  height: 48px;
-  font-size: 20px;
-}
-
-.profile-details {
-  min-width: 0;
-}
-
-.profile-details h4 {
-  margin: 0 0 4px;
-  font-size: 14px;
-  color: #1e293b;
-}
-
-.profile-details p {
-  margin: 0 0 7px;
-  font-size: 11px;
-  color: #64748b;
-  overflow-wrap: anywhere;
-}
-
-/* Student Badge */
-
-.student-badge {
-  display: inline-block;
-  padding: 3px 9px;
-  border-radius: 20px;
-  background: #eef2ff;
-  color: #4338ca;
-  font-size: 10px;
-  font-weight: 600;
-}
-
-/* Divider */
-
-.dropdown-divider {
-  height: 1px;
-  background: #e5e7eb;
-  margin: 7px 0;
-}
-
-/* Dropdown Items */
-
-.dropdown-item {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 11px 10px;
-  border: none;
-  border-radius: 8px;
-  background: transparent;
-  text-decoration: none;
-  color: #334155;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  text-align: left;
-  box-sizing: border-box;
-  transition: background 0.2s ease;
-}
-
-.dropdown-item:hover {
-  background: #f1f5f9;
-}
-
-/* Logout */
-
-.logout-item {
-  color: #dc2626;
-}
-
-.logout-item:hover {
-  background: #fef2f2;
-}
-
-/* ===============================
-   MOBILE RESPONSIVE
-================================ */
-
-@media (max-width: 600px) {
-  .profile-trigger-info,
-  .profile-chevron {
-    display: none;
-  }
-
-  .profile-trigger {
-    padding: 4px;
-    border: none;
-  }
-
-  .profile-dropdown {
-    width: 270px;
+    width: 280px;
     right: 0;
   }
-}
-/* ===============================
-   ORGANIZER / STUDENT MODE SWITCH
-================================ */
 
-.mode-switch-section {
-  padding: 10px 8px;
-}
-
-.mode-switch-title {
-  margin: 0 0 10px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #64748b;
-}
-
-.mode-switch-buttons {
-  display: flex;
-  width: 100%;
-}
-
-.mode-button {
-  width: 100%;
-  min-height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-
-  padding: 10px 12px;
-  border: 1px solid #4338ca;
-  border-radius: 9px;
-
-  background: #4338ca;
-  color: #ffffff;
-
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-
-.mode-button:hover {
-  background: #3730a3;
-  border-color: #3730a3;
-}
-
-.mode-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.mode-loading {
-  margin: 8px 0 0;
-  font-size: 11px;
-  color: #64748b;
-  text-align: center;
-}
-/* Fix Navbar Profile Trigger Size */
-.profile-wrapper {
-  position: relative;
-  width: fit-content;
-}
-
-.profile-trigger {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  width: auto !important;
-  height: auto !important;
-  min-height: unset !important;
-
-  padding: 7px 12px !important;
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-
-  background: #ffffff;
-  cursor: pointer;
-}
-
-/* Profile Avatar */
-.profile-trigger .profile-avatar,
-.profile-trigger img {
-  width: 42px !important;
-  height: 42px !important;
-  min-width: 42px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-/* Profile Information */
-.profile-trigger .profile-info {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-/* Dropdown Arrow */
-.profile-trigger .profile-arrow {
-  font-size: 14px;
-  margin-left: 5px;
+  .login-btn,
+  .signup-btn {
+    padding: 8px 11px;
+    font-size: 12px;
+  }
 }
