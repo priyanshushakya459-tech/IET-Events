@@ -794,3 +794,27 @@
   pointer-events: none;
 }
 
+.event-description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  line-height: 1.6;
+  min-height: calc(1.6em * 3);
+  max-height: calc(1.6em * 3);
+
+  overflow-wrap: anywhere;
+}
+.event-description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+  min-height: 4.8em;
+  max-height: 4.8em;
+}

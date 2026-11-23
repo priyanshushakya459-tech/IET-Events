@@ -78,7 +78,9 @@ function EventCard({ event }) {
           <button
             type="button"
             className="btn btn-register"
-            disabled={status === "completed" || status === "unknown"}
+            disabled={
+              status === "completed" || status === "unknown"
+            }
             onClick={() =>
               navigate(`/events/${event.id}/register`)
             }
